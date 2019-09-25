@@ -92,6 +92,8 @@ for fileMoreThar3File in g_AllMoreThan3FilePath_list:
     print("文件夹中存在多余文件，请清理：" + fileMoreThar3File)
 print("******************************************************************************")
 
+#谨慎操作
+#取消注释前确认是否是需要重命名
 #查找文件中存在多个空格的文件并重命名
 # for filedirpath in filedirpath_list:
 #     #print(filedirpath)
