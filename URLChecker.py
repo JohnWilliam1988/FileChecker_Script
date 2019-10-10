@@ -7,7 +7,11 @@ import time
 import sys
 print(sys.getdefaultencoding())
 
-file = open(r'E:\Cutting Machine\Project\FileChecker_Script\pngurllist.txt', encoding='utf-8') 
+#Windows格式
+#file = open(r'E:\Cutting Machine\Project\FileChecker_Script\pngurllist.txt', encoding='utf-8') 
+
+#Mac格式
+file = open(r'/Users/zhoujunliang/Documents/Python Project/Film Cutter/FileChecker_Script/pngurllist.txt', encoding='utf-8')
 lines = file.readlines() 
 url_list = [] 
 for line in lines: 
@@ -29,7 +33,10 @@ opener.addheaders = [('User-agent', 'Mozilla/49.0.2')]
 #这个是你放网址的文件名，改过来就可以了 
 avaliable_count = 0
 failedUrlList = []
-file = codecs.open(r'E:\Cutting Machine\Project\FileChecker_Script\diabledpngurllist.txt', 'w', 'utf-8')
+#Windows格式
+#file = codecs.open(r'E:\Cutting Machine\Project\FileChecker_Script\diabledpngurllist.txt', 'w', 'utf-8')
+#Mac格式
+file = codecs.open(r'/Users/zhoujunliang/Documents/Python Project/Film Cutter/FileChecker_Script/diabledpngurllist.txt', 'w', 'utf-8')
 for url in url_list: 
   tempUrl = url 
   try : 
