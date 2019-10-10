@@ -7,14 +7,14 @@ import time
 import sys
 print(sys.getdefaultencoding())
 
-file = open(r'E:\Cutting Machine\Project\FileChecker_Script\disableurllist.txt', encoding='utf-8') 
+file = open(r'E:\Cutting Machine\Project\FileChecker_Script\pngurllist.txt', encoding='utf-8') 
 lines = file.readlines() 
 url_list = [] 
 for line in lines: 
   temp = line.replace('\n','')
   print(temp) 
   url_list.append(temp) 
-#print(url_list) 
+  #print(url_list) 
 
 print('********************************************************************************************')
 print('URL总数为：%d'%len(url_list))
@@ -29,7 +29,7 @@ opener.addheaders = [('User-agent', 'Mozilla/49.0.2')]
 #这个是你放网址的文件名，改过来就可以了 
 avaliable_count = 0
 failedUrlList = []
-file = codecs.open(r'E:\Cutting Machine\Project\FileChecker_Script\unusefulurllist.txt', 'w', 'utf-8')
+file = codecs.open(r'E:\Cutting Machine\Project\FileChecker_Script\diabledpngurllist.txt', 'w', 'utf-8')
 for url in url_list: 
   tempUrl = url 
   try : 
