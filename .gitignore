@@ -1,5 +1,10 @@
 .vscode/launch.json
+*.json
 *.plt
 *.PLT
 *.jpg
 *.txt
+*.png
+*.cdr
+*.dxf
+*.cdt
