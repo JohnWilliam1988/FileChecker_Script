@@ -1,7 +1,5 @@
 .vscode/launch.json
-disableurllist.txt
-unusefulurllist.txt
-urllist.txt
-diabledpngurllist.txt
-E:/Cutting Machine/Project/FileChecker_Script/diabledpngurllist.txt
-E:/Cutting Machine/Project/FileChecker_Script/diabledpngurllist.txt
+*.plt
+*.PLT
+*.jpg
+*.txt
