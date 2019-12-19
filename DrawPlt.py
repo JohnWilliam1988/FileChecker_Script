@@ -3,6 +3,7 @@ import os
 import matplotlib.pyplot as plt
 import sys
 print(sys.getdefaultencoding())
+plt.rcParams['font.sans-serif'] = ['Arial Unicode MS']
 
 #所有plt文件路径List
 allPltFiles = []
@@ -31,15 +32,15 @@ def CaculateCurrentPltCoordinates(filePath):
     # tempPath = os.path.basename(filePath)
     # fileName = os.path.splitext(tempPath)[0]
     contents = file.read()
-    print(contents)
+    #print(contents)
     for coordinate in contents.split():
         #print(coordinate)
         if (coordinate[0] == 'D'):
             coordinate = coordinate.strip('D')
-            print(coordinate)
+            #print(coordinate)
             coordinate = coordinate.split(',', 1)
-            print(coordinate[0])
-            print(coordinate[1])
+            #print(coordinate[0])
+            #print(coordinate[1])
             Coordinates_X.append(int(coordinate[0]))
             Coordinates_Y.append(int(coordinate[1]))
     return Coordinates_X, Coordinates_Y
