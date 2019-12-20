@@ -28,7 +28,9 @@ def sysInit():
         print ("Call Linux tasks")
     elif(SYSSTRING == "Darwin"):
         print ("Call Darwin tasks")
+        global pltFileRootPath
         pltFileRootPath = "plt/"
+        global pltSavedJPGPath
         pltSavedJPGPath = "pltJPG/"
     else:
         print ("Other System tasks")
