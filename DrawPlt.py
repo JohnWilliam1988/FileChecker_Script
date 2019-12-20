@@ -1,15 +1,38 @@
 # -*- coding: utf-8 -*-
 import os
-import matplotlib.pyplot as plt
+import platform
 import sys
+import matplotlib.pyplot as plt
 print(sys.getdefaultencoding())
 plt.rcParams['font.sans-serif'] = ['Arial Unicode MS']
 
+
+SYSSTRING = platform.system()
+
 #所有plt文件路径List
 allPltFiles = []
-#plt文件根目录
-pltFileRootPath = "plt/"
 
+#plt文件根目录
+pltFileRootPath = ''
+#plt文件坐标图保存路径
+pltSavedJPGPath = ''
+
+def sysInit():
+    if(SYSSTRING == "Windows"):
+        print ("Call Windows tasks")
+        global pltFileRootPath
+        pltFileRootPath = '纵向\\'
+        global pltSavedJPGPath
+        pltSavedJPGPath = '纵向JPG\\'
+    elif(SYSSTRING == "Linux"):
+        print ("Call Linux tasks")
+    elif(SYSSTRING == "Darwin"):
+        print ("Call Darwin tasks")
+        pltFileRootPath = "plt/"
+        pltSavedJPGPath = "pltJPG/"
+    else:
+        print ("Other System tasks")
+    return
 
 
 def FindAllPltFilePath(path):
@@ -51,24 +74,27 @@ def SaveCoordinatesJPG(coordsX, coordsY, filename):
     plt.ylabel('Y', fontsize = 14)
 
     # 设置刻度标记的大小
-    plt.tick_params(axis='both', which='major', labelsize=14)
+    plt.tick_params(axis='both', which='major', labelsize = 14)
 
     # 设置每个坐标轴的取值范围
     plt.axis([0, 8000, 0, 6000]) 
-    plt.legend(loc = 'best')    # 设置 图例所在的位置 使用推荐位置
+    
     # 设置图表标题并给坐标轴加上标签
-    plt.title(filename, fontsize = 24)
+    plt.title('PLT文件坐标轴', fontsize = 24)
     plt.scatter(coordsY, coordsX, s = 3)
-    plt.plot(coordsY, coordsX, color="r", linestyle="--", marker="*", linewidth=3.0)
+    plt.plot(coordsY, coordsX, color = "r", linestyle = "--", marker = "*", linewidth = 2.0, label = filename)
+    # 设置 图例所在的位置 使用推荐位置
+    plt.legend(loc = 'best')   
     #plt.show() 
     #保存图象
-    plt.savefig('ScreenProtectorJPG/' + filename + '.jpg')
+    plt.savefig(pltSavedJPGPath + filename + '.jpg')
     print("保存图片成功！！！") 
     plt.close()
     return
 
 
 if __name__ == "__main__":
+    sysInit()
     FindAllPltFilePath(pltFileRootPath)
     i = 0
     for file in allPltFiles:
