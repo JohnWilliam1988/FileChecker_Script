@@ -18,20 +18,18 @@ pltFileRootPath = ''
 pltSavedJPGPath = ''
 
 def sysInit():
+    global pltFileRootPath
+    global pltSavedJPGPath
     if(SYSSTRING == "Windows"):
         print ("Call Windows tasks")
-        global pltFileRootPath
         pltFileRootPath = '纵向\\'
-        global pltSavedJPGPath
         pltSavedJPGPath = '纵向JPG\\'
     elif(SYSSTRING == "Linux"):
         print ("Call Linux tasks")
     elif(SYSSTRING == "Darwin"):
         print ("Call Darwin tasks")
-        global pltFileRootPath
         pltFileRootPath = "plt/"
-        global pltSavedJPGPath
-        pltSavedJPGPath = "pltJPG/"
+        pltSavedJPGPath = "pltJPG1/"
     else:
         print ("Other System tasks")
     return
@@ -82,15 +80,20 @@ def SaveCoordinatesJPG(coordsX, coordsY, filename):
     plt.axis([0, 8000, 0, 6000]) 
     
     # 设置图表标题并给坐标轴加上标签
-    plt.title('PLT文件坐标轴', fontsize = 24)
+    plt.title('PLT文件可视化', fontsize = 24)
     plt.scatter(coordsY, coordsX, s = 3)
     plt.plot(coordsY, coordsX, color = "r", linestyle = "--", marker = "*", linewidth = 2.0, label = filename)
     # 设置 图例所在的位置 使用推荐位置
     plt.legend(loc = 'best')   
     #plt.show() 
     #保存图象
-    plt.savefig(pltSavedJPGPath + filename + '.jpg')
-    print("保存图片成功！！！") 
+    #加入同名文件存在处理，还可以改进，要判断到确认没有同名文件为止
+    if os.path.exists(pltSavedJPGPath + filename + '.jpg'):
+        print(pltSavedJPGPath + filename + '.jpg' + ' File Already Exist!!!!!!')
+        plt.savefig(pltSavedJPGPath + filename + 'exist.jpg')
+    else:
+        plt.savefig(pltSavedJPGPath + filename + '.jpg')
+        print("保存图片成功！！！") 
     plt.close()
     return
 
@@ -104,8 +107,8 @@ if __name__ == "__main__":
         fileName = os.path.splitext(tempPath)[0]
         (coordinateX, coordinateY) = CaculateCurrentPltCoordinates(file)
         SaveCoordinatesJPG(coordinateX, coordinateY, fileName)
-        coordinateX.clear()
-        coordinateY.clear()
+        #coordinateX.clear()
+        #coordinateY.clear()
         print("保存了%d个jpg！！！！！" %i)
         i += 1
     print("所有Plt绘制完成！！！！！")
