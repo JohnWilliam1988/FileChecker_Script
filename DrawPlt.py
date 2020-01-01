@@ -32,6 +32,9 @@ def sysInit():
         pltSavedJPGPath = "pltJPG1/"
     else:
         print ("Other System tasks")
+
+    
+
     return
 
 
@@ -70,21 +73,28 @@ def CaculateCurrentPltCoordinates(filePath):
    
 
 def SaveCoordinatesJPG(coordsX, coordsY, filename):
-    plt.xlabel('X', fontsize = 14)
-    plt.ylabel('Y', fontsize = 14)
+
+    plt.figure(num = 1, figsize = (15, 8),dpi = 100)
+
+    plt.xlabel('高', fontsize = 14)
+    plt.ylabel('宽', fontsize = 14)
 
     # 设置刻度标记的大小
-    plt.tick_params(axis='both', which='major', labelsize = 14)
+    #plt.tick_params(axis='both', which='major', labelsize = 14)
 
     # 设置每个坐标轴的取值范围
-    plt.axis([0, 8000, 0, 6000]) 
+    #plt.axis([0, 8000, 0, 6000]) 
     
     # 设置图表标题并给坐标轴加上标签
     plt.title('PLT文件可视化', fontsize = 24)
-    plt.scatter(coordsY, coordsX, s = 3)
-    plt.plot(coordsY, coordsX, color = "r", linestyle = "--", marker = "*", linewidth = 2.0, label = filename)
-    # 设置 图例所在的位置 使用推荐位置
-    plt.legend(loc = 'best')   
+     
+    #plt.scatter(coordsY, coordsX, s = 3)
+    
+    #plt.plot(coordsY, coordsX, color = "r", linestyle = "--", marker = "*", linewidth = 2.0, label = filename)
+    plt.plot(coordsY, coordsX, color = "r", label = filename)
+     # 设置 图例所在的位置 使用推荐位置
+    plt.legend(loc = 'best') 
+    
     #plt.show() 
     #保存图象
     #加入同名文件存在处理，还可以改进，要判断到确认没有同名文件为止
