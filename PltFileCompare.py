@@ -3,7 +3,7 @@ import os
 import platform
 import sys
 import matplotlib.pyplot as plt
-import numpy as np
+#import numpy as np
 print(sys.getdefaultencoding())
 plt.rcParams['font.sans-serif'] = ['Arial Unicode MS']
 
@@ -92,12 +92,17 @@ def ShowPlt(file1Path, file2Path):
     #在第二个子图上画图
     #ax2.plot(np.arange(0,1,0.1),range(0,20,2),color='r')
     plt.show()
+    print('显示完成！')
 
 
 if __name__ == "__main__":
-    #file1 = '红米 Note 8 (缅甸定制)_Hex 12.31.plt'
-    #file2 = 'xiaomi 8.plt'
+    #file1 = "E:\\Cutting Machine\\Project\\FileChecker_Script\\plt\\Screen Protector\\Blackview\\BV5800\\Blackview Bv5800 前膜 6.18.plt"
+    #file2 = "E:\\Cutting Machine\\Project\\FileChecker_Script\\plt\\Screen Protector\\china mobile\A2\\中国移动 A2 前膜 2.19.plt"
     file1 = sys.argv[1]
+    print(file1)
     file2 = sys.argv[2]
+    print(file2)
+    # file1 = "E:\\Cutting Machine\\Project\\FileChecker_Script\\iPhone 6P 前膜 左右各收0.7上面加0.2下面收0.3home键左移0.33.08.plt"
+    # file2 = "C:\\Users\\Administrator\\Desktop\\iPhone 6 Plus.plt"
     ShowPlt(file1, file2)
    

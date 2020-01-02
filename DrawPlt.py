@@ -107,18 +107,54 @@ def SaveCoordinatesJPG(coordsX, coordsY, filename):
     plt.close()
     return
 
+def DrawPlt(coordsX, coordsY, filename):
+
+    plt.figure(num = 1, figsize = (15, 8),dpi = 100)
+
+    plt.xlabel('高', fontsize = 14)
+    plt.ylabel('宽', fontsize = 14)
+
+    # 设置刻度标记的大小
+    #plt.tick_params(axis='both', which='major', labelsize = 14)
+
+    # 设置每个坐标轴的取值范围
+    #plt.axis([0, 8000, 0, 6000]) 
+    
+    # 设置图表标题并给坐标轴加上标签
+    plt.title('PLT文件可视化', fontsize = 24)
+     
+    #plt.scatter(coordsY, coordsX, s = 3)
+    
+    #plt.plot(coordsY, coordsX, color = "r", linestyle = "--", marker = "*", linewidth = 2.0, label = filename)
+    plt.plot(coordsY, coordsX, color = "r", label = filename)
+     # 设置 图例所在的位置 使用推荐位置
+    plt.legend(loc = 'best') 
+    
+    plt.show() 
+    print("显示完成！！！")
+    return
+
 
 if __name__ == "__main__":
+    ##批量遍历Plt文件
+    # sysInit()
+    # FindAllPltFilePath(pltFileRootPath)
+    # i = 0
+    # for file in allPltFiles:
+    #     tempPath = os.path.basename(file)
+    #     fileName = os.path.splitext(tempPath)[0]
+    #     (coordinateX, coordinateY) = CaculateCurrentPltCoordinates(file)
+    #     SaveCoordinatesJPG(coordinateX, coordinateY, fileName)
+    #     #coordinateX.clear()
+    #     #coordinateY.clear()
+    #     print("保存了%d个jpg！！！！！" %i)
+    #     i += 1
+    # print("所有Plt绘制完成！！！！！")
+
+    #显示单个Plt文件
     sysInit()
-    FindAllPltFilePath(pltFileRootPath)
-    i = 0
-    for file in allPltFiles:
-        tempPath = os.path.basename(file)
-        fileName = os.path.splitext(tempPath)[0]
-        (coordinateX, coordinateY) = CaculateCurrentPltCoordinates(file)
-        SaveCoordinatesJPG(coordinateX, coordinateY, fileName)
-        #coordinateX.clear()
-        #coordinateY.clear()
-        print("保存了%d个jpg！！！！！" %i)
-        i += 1
-    print("所有Plt绘制完成！！！！！")
+    file = sys.argv[1]
+    tempPath = os.path.basename(file)
+    fileName = os.path.splitext(tempPath)[0]
+    (coordinateX, coordinateY) = CaculateCurrentPltCoordinates(file)
+    DrawPlt(coordinateX, coordinateY, fileName)
