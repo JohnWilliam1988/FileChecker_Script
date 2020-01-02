@@ -1,4 +1,6 @@
 .vscode/launch.json
+./__pycache__/*
+./dist/*
 *.json
 *.plt
 *.PLT
@@ -9,3 +11,5 @@
 *.dxf
 *.cdt
 *.zip
+*.java
+*.exe
