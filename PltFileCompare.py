@@ -96,13 +96,27 @@ def ShowPlt(file1Path, file2Path):
 
 
 if __name__ == "__main__":
-    #file1 = "E:\\Cutting Machine\\Project\\FileChecker_Script\\plt\\Screen Protector\\Blackview\\BV5800\\Blackview Bv5800 前膜 6.18.plt"
-    #file2 = "E:\\Cutting Machine\\Project\\FileChecker_Script\\plt\\Screen Protector\\china mobile\A2\\中国移动 A2 前膜 2.19.plt"
     file1 = sys.argv[1]
     print(file1)
+    (filepath, tempfilename) = os.path.split(file1)
+    (filename, extension) = os.path.splitext(tempfilename)
+    print('filepath is : ' + filepath)
+    print('filename is : ' + filename)
+    print('extension is : ' + extension)
+    if (extension == '.txt'):
+        ConventHex2IntPlt(file1)
+        file1 = os.path.join(filepath, filename + '.plt')
+
     file2 = sys.argv[2]
     print(file2)
-    # file1 = "E:\\Cutting Machine\\Project\\FileChecker_Script\\iPhone 6P 前膜 左右各收0.7上面加0.2下面收0.3home键左移0.33.08.plt"
-    # file2 = "C:\\Users\\Administrator\\Desktop\\iPhone 6 Plus.plt"
+    (filepath, tempfilename) = os.path.split(file2)
+    (filename, extension) = os.path.splitext(tempfilename)
+    print('filepath is : ' + filepath)
+    print('filename is : ' + filename)
+    print('extension is : ' + extension)
+    if (extension == '.txt'):
+        ConventHex2IntPlt(file2)
+        file2 = os.path.join(filepath, filename + '.plt')
+
     ShowPlt(file1, file2)
    
