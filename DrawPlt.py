@@ -2,6 +2,7 @@
 import os
 import platform
 import sys
+import requests
 import matplotlib.pyplot as plt
 print(sys.getdefaultencoding())
 plt.rcParams['font.sans-serif'] = ['Arial Unicode MS']
@@ -111,6 +112,12 @@ def DrawPlt(coordsX, coordsY, filename):
 
     plt.figure(num = 1, figsize = (15, 8),dpi = 100)
 
+    height = max(coordsX) - min(coordsX)
+    width = max(coordsY) - min(coordsY)
+
+    xLableTitle = "高：" + str(height)
+    yLableTitle = "宽：" + str(width)
+
     plt.xlabel('高', fontsize = 14)
     plt.ylabel('宽', fontsize = 14)
 
@@ -134,6 +141,14 @@ def DrawPlt(coordsX, coordsY, filename):
     print("显示完成！！！")
     return
 
+def DownloadPltfile(pltUrl):
+    plt_url = pltUrl
+    r = requests.get(plt_url) 
+    with open("D://Download.plt",'wb') as f:
+        f.write(r.content)
+        print("Download Plt file!!!")
+        return "D://Download.plt"
+
 
 if __name__ == "__main__":
     ##批量遍历Plt文件
@@ -153,8 +168,10 @@ if __name__ == "__main__":
 
     #显示单个Plt文件
     sysInit()
-    file = sys.argv[1]
-    tempPath = os.path.basename(file)
+    fileUrl = sys.argv[1]
+    print(fileUrl)
+    filePath = DownloadPltfile(fileUrl)
+    tempPath = os.path.basename(filePath)
     fileName = os.path.splitext(tempPath)[0]
-    (coordinateX, coordinateY) = CaculateCurrentPltCoordinates(file)
+    (coordinateX, coordinateY) = CaculateCurrentPltCoordinates(filePath)
     DrawPlt(coordinateX, coordinateY, fileName)
