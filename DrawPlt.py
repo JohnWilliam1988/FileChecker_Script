@@ -5,7 +5,13 @@ import sys
 import requests
 import matplotlib.pyplot as plt
 print(sys.getdefaultencoding())
-plt.rcParams['font.sans-serif'] = ['Arial Unicode MS']
+
+#Tip 家里电脑中文编码乱码
+#plt.rcParams['font.sans-serif'] = ['Arial Unicode MS']
+#修改为以下后正常
+plt.rcParams['font.sans-serif'] = ['SimHei'] 
+plt.rcParams['font.family']='sans-serif'
+
 
 
 SYSSTRING = platform.system()
@@ -115,11 +121,11 @@ def DrawPlt(coordsX, coordsY, filename):
     height = max(coordsX) - min(coordsX)
     width = max(coordsY) - min(coordsY)
 
-    xLableTitle = "高：" + str(height)
-    yLableTitle = "宽：" + str(width)
+    xLableTitle = "宽：" + str(height)
+    yLableTitle = "高：" + str(width)
 
-    plt.xlabel('高', fontsize = 14)
-    plt.ylabel('宽', fontsize = 14)
+    plt.xlabel(yLableTitle, fontsize = 14)
+    plt.ylabel(xLableTitle, fontsize = 14)
 
     # 设置刻度标记的大小
     #plt.tick_params(axis='both', which='major', labelsize = 14)
@@ -143,11 +149,13 @@ def DrawPlt(coordsX, coordsY, filename):
 
 def DownloadPltfile(pltUrl):
     plt_url = pltUrl
+    fileName = os.path.basename(plt_url)
+    print(fileName)
     r = requests.get(plt_url) 
-    with open("D://Download.plt",'wb') as f:
+    with open("D://DownloadPlt//" + fileName,'wb') as f:
         f.write(r.content)
         print("Download Plt file!!!")
-        return "D://Download.plt"
+        return "D://DownloadPlt//" + fileName
 
 
 if __name__ == "__main__":
