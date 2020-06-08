@@ -118,14 +118,20 @@ def DrawPlt(coordsX, coordsY, filename):
 
     plt.figure(num = 1, figsize = (15, 8),dpi = 100)
 
-    height = max(coordsX) - min(coordsX)
-    width = max(coordsY) - min(coordsY)
+    height = (max(coordsX) - min(coordsX)) / 40
+    width = (max(coordsY) - min(coordsY)) / 40
 
-    xLableTitle = "宽：" + str(height)
-    yLableTitle = "高：" + str(width)
+    font = {'family': 'sans-serif',
+        'color':  'blue',
+        'weight': 'normal',
+        'size': 16,
+        }
 
-    plt.xlabel(yLableTitle, fontsize = 14)
-    plt.ylabel(xLableTitle, fontsize = 14)
+    xLableTitle = "宽：" + str(height) + " mm"
+    yLableTitle = "高：" + str(width) + " mm"
+
+    plt.xlabel(yLableTitle, font)
+    plt.ylabel(xLableTitle, font)
 
     # 设置刻度标记的大小
     #plt.tick_params(axis='both', which='major', labelsize = 14)
@@ -134,7 +140,7 @@ def DrawPlt(coordsX, coordsY, filename):
     #plt.axis([0, 8000, 0, 6000]) 
     
     # 设置图表标题并给坐标轴加上标签
-    plt.title('PLT文件可视化', fontsize = 24)
+    plt.title('PLT文件可视化', fontsize = 18)
      
     #plt.scatter(coordsY, coordsX, s = 3)
     
@@ -145,6 +151,8 @@ def DrawPlt(coordsX, coordsY, filename):
     
     plt.show() 
     print("显示完成！！！")
+
+    exit()
     return
 
 def DownloadPltfile(pltUrl):
