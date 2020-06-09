@@ -11,7 +11,8 @@ print(sys.getdefaultencoding())
 #修改为以下后正常
 plt.rcParams['font.sans-serif'] = ['SimHei'] 
 plt.rcParams['font.family']='sans-serif'
-
+#修改中文负号乱码
+plt.rcParams['axes.unicode_minus'] = False 
 
 
 SYSSTRING = platform.system()
@@ -81,10 +82,10 @@ def CaculateCurrentPltCoordinates(filePath):
 
 def SaveCoordinatesJPG(coordsX, coordsY, filename):
 
-    plt.figure(num = 1, figsize = (15, 8),dpi = 100)
+    plt.figure(num = 1, figsize = (15, 15),dpi = 100)
 
-    plt.xlabel('高', fontsize = 14)
-    plt.ylabel('宽', fontsize = 14)
+    plt.xlabel('宽', fontsize = 14)
+    plt.ylabel('高', fontsize = 14)
 
     # 设置刻度标记的大小
     #plt.tick_params(axis='both', which='major', labelsize = 14)
@@ -98,7 +99,7 @@ def SaveCoordinatesJPG(coordsX, coordsY, filename):
     #plt.scatter(coordsY, coordsX, s = 3)
     
     #plt.plot(coordsY, coordsX, color = "r", linestyle = "--", marker = "*", linewidth = 2.0, label = filename)
-    plt.plot(coordsY, coordsX, color = "r", label = filename)
+    plt.plot(coordsX, coordsY, color = "r", label = filename)
      # 设置 图例所在的位置 使用推荐位置
     plt.legend(loc = 'best') 
     
@@ -116,7 +117,7 @@ def SaveCoordinatesJPG(coordsX, coordsY, filename):
 
 def DrawPlt(coordsX, coordsY, filename):
 
-    plt.figure(num = 1, figsize = (15, 8),dpi = 100)
+    plt.figure(num = 1, figsize = (15, 15),dpi = 100)
 
     height = (max(coordsX) - min(coordsX)) / 40
     width = (max(coordsY) - min(coordsY)) / 40
@@ -127,11 +128,11 @@ def DrawPlt(coordsX, coordsY, filename):
         'size': 16,
         }
 
-    xLableTitle = "宽：" + str(height) + " mm"
-    yLableTitle = "高：" + str(width) + " mm"
+    xLableTitle = "高：" + str(height) + " mm"
+    yLableTitle = "宽：" + str(width) + " mm"
 
-    plt.xlabel(yLableTitle, font)
-    plt.ylabel(xLableTitle, font)
+    plt.xlabel(xLableTitle, font)
+    plt.ylabel(yLableTitle, font)
 
     # 设置刻度标记的大小
     #plt.tick_params(axis='both', which='major', labelsize = 14)
@@ -144,15 +145,17 @@ def DrawPlt(coordsX, coordsY, filename):
      
     #plt.scatter(coordsY, coordsX, s = 3)
     
-    #plt.plot(coordsY, coordsX, color = "r", linestyle = "--", marker = "*", linewidth = 2.0, label = filename)
-    plt.plot(coordsY, coordsX, color = "r", label = filename)
+    #plt.plot(coordsY, cooXrdsX, color = "r", linestyle = "--", marker = "*", linewidth = 2.0, label = filename)
+    plt.plot(coordsX, coordsY, color = "r", label = filename)
      # 设置 图例所在的位置 使用推荐位置
     plt.legend(loc = 'best') 
+
+    plt.axis("equal")
     
     plt.show() 
     print("显示完成！！！")
 
-    exit()
+    #os.system("exit")
     return
 
 def DownloadPltfile(pltUrl):
