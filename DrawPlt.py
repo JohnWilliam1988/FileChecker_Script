@@ -99,7 +99,7 @@ def SaveCoordinatesJPG(coordsX, coordsY, filename):
     #plt.scatter(coordsY, coordsX, s = 3)
     
     #plt.plot(coordsY, coordsX, color = "r", linestyle = "--", marker = "*", linewidth = 2.0, label = filename)
-    plt.plot(coordsX, coordsY, color = "r", label = filename)
+    plt.plot(coordsX, coordsX, color = "r", label = filename)
      # 设置 图例所在的位置 使用推荐位置
     plt.legend(loc = 'best') 
     
@@ -119,8 +119,8 @@ def DrawPlt(coordsX, coordsY, filename):
 
     plt.figure(num = 1, figsize = (15, 15),dpi = 100)
 
-    height = (max(coordsX) - min(coordsX)) / 40
-    width = (max(coordsY) - min(coordsY)) / 40
+    width = (max(coordsX) - min(coordsX)) / 40
+    height = (max(coordsY) - min(coordsY)) / 40
 
     font = {'family': 'sans-serif',
         'color':  'blue',
@@ -128,8 +128,8 @@ def DrawPlt(coordsX, coordsY, filename):
         'size': 16,
         }
 
-    xLableTitle = "高：" + str(height) + " mm"
-    yLableTitle = "宽：" + str(width) + " mm"
+    xLableTitle = "宽：" + str(width) + " mm"
+    yLableTitle = "高：" + str(height) + " mm"
 
     plt.xlabel(xLableTitle, font)
     plt.ylabel(yLableTitle, font)
@@ -151,21 +151,20 @@ def DrawPlt(coordsX, coordsY, filename):
     plt.legend(loc = 'best') 
 
     plt.axis("equal")
-    
+    # toggle fullscreen mode
+    #plt.get_current_fig_manager().full_screen_toggle() 
     plt.show() 
-    print("显示完成！！！")
+    print("Show Completed！！！")
 
-    #os.system("exit")
     return
 
 def DownloadPltfile(pltUrl):
     plt_url = pltUrl
     fileName = os.path.basename(plt_url)
-    print(fileName)
     r = requests.get(plt_url) 
     with open("D://DownloadPlt//" + fileName,'wb') as f:
         f.write(r.content)
-        print("Download Plt file!!!")
+        print("Download Plt file completed!!!")
         return "D://DownloadPlt//" + fileName
 
 
