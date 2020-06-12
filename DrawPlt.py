@@ -56,19 +56,40 @@ def FindAllPltFilePath(path):
     print("总共PLT文件为：%d"  %len(allPltFiles))
             
 
-def CaculateCurrentPltCoordinates(filePath):
+def CaculateCurrentPltCoordinatesAndDraw(filePath):
     #存储当前Plt文件坐标List
     Coordinates_X = []
     Coordinates_Y = []
+    coordsX = []
+    coordsY = []
     #Mac格式
     file = open(filePath, encoding='utf-8')
     print("文件路径为： " + file.name)
-    # tempPath = os.path.basename(filePath)
-    # fileName = os.path.splitext(tempPath)[0]
+    tempPath = os.path.basename(filePath)
+    fileName = os.path.splitext(tempPath)[0]
     contents = file.read()
+
+    plt.figure(num = 1, figsize = (15, 15), dpi = 100)
+
+    # 设置刻度标记的大小
+    #plt.tick_params(axis='both', which='major', labelsize = 14)
+
+    # 设置每个坐标轴的取值范围
+    #plt.axis([0, 8000, 0, 6000]) 
+    
+    # 设置图表标题并给坐标轴加上标签
+    plt.title(fileName, fontsize = 18)
+
     #print(contents)
     for coordinate in contents.split():
         #print(coordinate)
+        if (coordinate[0] == 'U'):
+            if ((len(coordsX) > 0) and (len(coordsY) > 0 )):
+                plt.plot(coordsX, coordsY, color = "r")
+
+            coordsX.clear()
+            coordsY.clear()
+            continue
         if (coordinate[0] == 'D'):
             coordinate = coordinate.strip('D')
             #print(coordinate)
@@ -76,8 +97,39 @@ def CaculateCurrentPltCoordinates(filePath):
             #print(coordinate[0])
             #print(coordinate[1])
             Coordinates_X.append(int(coordinate[0]))
+            coordsX.append(int(coordinate[0]))
             Coordinates_Y.append(int(coordinate[1]))
-    return Coordinates_X, Coordinates_Y
+            coordsY.append(int(coordinate[1]))
+            #continue
+        
+            
+
+    width = (max(Coordinates_X) - min(Coordinates_X)) / 40
+    height = (max(Coordinates_Y) - min(Coordinates_Y)) / 40
+
+    font = {'family': 'sans-serif',
+        'color':  'blue',
+        'weight': 'normal',
+        'size': 16,
+        }
+
+    xLableTitle = "宽：" + str(width) + " mm"
+    yLableTitle = "高：" + str(height) + " mm"
+
+    plt.xlabel(xLableTitle, font)
+    plt.ylabel(yLableTitle, font)
+
+    
+     # 设置 图例所在的位置 使用推荐位置
+    plt.legend(loc = 'best') 
+
+    plt.axis("equal")
+    # toggle fullscreen mode
+    #plt.get_current_fig_manager().full_screen_toggle() 
+    plt.show() 
+    print("Show Completed！！！")
+
+    return
    
 
 def SaveCoordinatesJPG(coordsX, coordsY, filename):
@@ -191,5 +243,5 @@ if __name__ == "__main__":
     filePath = DownloadPltfile(fileUrl)
     tempPath = os.path.basename(filePath)
     fileName = os.path.splitext(tempPath)[0]
-    (coordinateX, coordinateY) = CaculateCurrentPltCoordinates(filePath)
-    DrawPlt(coordinateX, coordinateY, fileName)
+    CaculateCurrentPltCoordinatesAndDraw(filePath)
+    #DrawPlt(coordinateX, coordinateY, fileName)
