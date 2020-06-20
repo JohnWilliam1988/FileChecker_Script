@@ -6,6 +6,7 @@ import requests
 import matplotlib.pyplot as plt
 from PIL import Image
 import xlrd
+import time
 print(sys.getdefaultencoding())
 
 #Tip 家里电脑中文编码乱码
@@ -43,6 +44,9 @@ def sysInit():
     else:
         print ("Other System tasks")
 
+    
+    
+
     return
 
             
@@ -61,6 +65,15 @@ def CaculateCurrentPltCoordinatesAndDraw(filePath):
     contents = file.read()
 
     plt.figure(num = 1, figsize = (15, 15), dpi = 100)
+    ax = plt.gca()
+
+    #x轴方向调整：
+    ax.xaxis.set_ticks_position('top') #将x轴的位置设置在顶部
+    ax.invert_xaxis() #x轴反向
+
+    #y轴方向调整：
+    ax.yaxis.set_ticks_position('right') #将y轴的位置设置在右边
+    ax.invert_yaxis() #y轴反向
 
     # 设置刻度标记的大小
     #plt.tick_params(axis='both', which='major', labelsize = 14)
@@ -95,20 +108,20 @@ def CaculateCurrentPltCoordinatesAndDraw(filePath):
         
             
 
-    width = (max(Coordinates_X) - min(Coordinates_X)) / 40
-    height = (max(Coordinates_Y) - min(Coordinates_Y)) / 40
+    # width = (max(Coordinates_X) - min(Coordinates_X)) / 40
+    # height = (max(Coordinates_Y) - min(Coordinates_Y)) / 40
 
-    font = {'family': 'sans-serif',
-        'color':  'blue',
-        'weight': 'normal',
-        'size': 16,
-        }
+    # font = {'family': 'sans-serif',
+    #     'color':  'blue',
+    #     'weight': 'normal',
+    #     'size': 16,
+    #     }
 
-    xLableTitle = "宽：" + str(width) + " mm"
-    yLableTitle = "高：" + str(height) + " mm"
+    # xLableTitle = "宽：" + str(width) + " mm"
+    # yLableTitle = "高：" + str(height) + " mm"
 
-    plt.xlabel(xLableTitle, font)
-    plt.ylabel(yLableTitle, font)
+    # plt.xlabel(xLableTitle, font)
+    # plt.ylabel(yLableTitle, font)
 
     
     #设置 图例所在的位置 使用推荐位置
@@ -128,21 +141,21 @@ def CaculateCurrentPltCoordinatesAndDraw(filePath):
     if os.path.exists(savePngPath):
         print(savePngPath + ' File Already Exist!!!!!!')
         plt.savefig(pltSavedJPGPath + fileName + 'exist.png', transparent=True)
-        #read the image
-        im = Image.open(pltSavedJPGPath + fileName + 'exist.png')
-        #rotate image by 180 degrees
-        angle = 180
-        out = im.rotate(angle, expand = True)
-        out.save(pltSavedJPGPath + fileName + 'exist.png')
+        # #read the image
+        # im = Image.open(pltSavedJPGPath + fileName + 'exist.png')
+        # #rotate image by 180 degrees
+        # angle = 180
+        # out = im.rotate(angle, expand = True)
+        # out.save(pltSavedJPGPath + fileName + 'exist.png')
         print("保存图片成功！！！") 
     else:
         plt.savefig(savePngPath, transparent=True)
-        #read the image
-        im = Image.open(savePngPath)
-        #rotate image by 180 degrees
-        angle = 180
-        out = im.rotate(angle, expand = True)
-        out.save(savePngPath)
+        # #read the image
+        # im = Image.open(savePngPath)
+        # #rotate image by 180 degrees
+        # angle = 180
+        # out = im.rotate(angle, expand = True)
+        # out.save(savePngPath)
         print("保存图片成功！！！") 
     plt.close()
 
@@ -156,10 +169,11 @@ def DownloadPltfile(pltUrl):
     with open("D://DownloadPlt//" + fileName,'wb') as f:
         f.write(r.content)
         print("Download Plt file completed!!!")
+        time.sleep(0.01)
         return "D://DownloadPlt//" + fileName
 
 
-def excel_data(file= "E:\Cutting Machine\Project\FileChecker_Script\AllPltsUrl.xlsx"):
+def excel_data(file= "E:\Python Project\FileChecker_Script\AllPltsUrl.xlsx"):
     try:
         # 打开Excel文件读取数据
         data = xlrd.open_workbook(file)
@@ -212,6 +226,6 @@ if __name__ == "__main__":
         fileUrl = url
         filePath = DownloadPltfile(fileUrl)
         tempPath = os.path.basename(filePath)
-        fileName = os.path.splitext(tempPath)[0]
+        #fileName = os.path.splitext(tempPath)[0]
         CaculateCurrentPltCoordinatesAndDraw(filePath)
         #DrawPlt(coordinateX, coordinateY, fileName)
