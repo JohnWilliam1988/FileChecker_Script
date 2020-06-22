@@ -70,6 +70,15 @@ def CaculateCurrentPltCoordinatesAndDraw(filePath):
     contents = file.read()
 
     plt.figure(num = 1, figsize = (15, 15), dpi = 100)
+    ax = plt.gca()
+
+    #x轴方向调整：
+    ax.xaxis.set_ticks_position('top') #将x轴的位置设置在顶部
+    ax.invert_xaxis() #x轴反向
+
+    #y轴方向调整：
+    ax.yaxis.set_ticks_position('right') #将y轴的位置设置在右边
+    ax.invert_yaxis() #y轴反向
 
     # 设置刻度标记的大小
     #plt.tick_params(axis='both', which='major', labelsize = 14)
@@ -238,6 +247,7 @@ if __name__ == "__main__":
 
     #显示单个Plt文件
     sysInit()
+    #'https://static.vr186.com/public/upload/material/plt/mobilephonefilm/xiaomi/redminote9s/(withcover)/screenprotector/红米note9s前膜带壳3.25.plt'
     fileUrl = sys.argv[1]
     print(fileUrl)
     filePath = DownloadPltfile(fileUrl)
