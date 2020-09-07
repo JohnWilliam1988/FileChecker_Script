@@ -140,16 +140,17 @@ def CaculateCurrentPltCoordinatesAndDraw(filePath):
     savePngPath = pltSavedJPGPath + fileName + '.png'
     if os.path.exists(savePngPath):
         print(savePngPath + ' File Already Exist!!!!!!')
-        plt.savefig(pltSavedJPGPath + fileName + 'exist.png', transparent=True)
+        plt.savefig(pltSavedJPGPath + fileName + 'exist.png', transparent=True, bbox_inches='tight', pad_inches=0.0)
         # #read the image
         # im = Image.open(pltSavedJPGPath + fileName + 'exist.png')
+        
         # #rotate image by 180 degrees
         # angle = 180
         # out = im.rotate(angle, expand = True)
         # out.save(pltSavedJPGPath + fileName + 'exist.png')
         print("保存图片成功！！！") 
     else:
-        plt.savefig(savePngPath, transparent=True)
+        plt.savefig(savePngPath, transparent=True, bbox_inches='tight', pad_inches=0.0)
         # #read the image
         # im = Image.open(savePngPath)
         # #rotate image by 180 degrees
