@@ -6,11 +6,16 @@ import requests
 import matplotlib.pyplot as plt
 print(sys.getdefaultencoding())
 
-#Tip 家里电脑中文编码乱码
-#plt.rcParams['font.sans-serif'] = ['Arial Unicode MS']
-#修改为以下后正常
-plt.rcParams['font.sans-serif'] = ['SimHei'] 
-plt.rcParams['font.family']='sans-serif'
+
+# plt.rcParams['font.sans-serif'] = ['Arial Unicode MS']
+# Note:家里电脑中文编码乱码修改为以下后正常
+# Data:2020-6
+# plt.rcParams['font.sans-serif'] = ['SimHei'] 
+# plt.rcParams['font.family']='sans-serif'
+# Note:Mac上中文乱码修改为以下后显示正常
+# Date:2020-11
+plt.rcParams['font.sans-serif'] = ['Arial Unicode MS']
+
 #修改中文负号乱码
 plt.rcParams['axes.unicode_minus'] = False 
 
@@ -70,15 +75,20 @@ def CaculateCurrentPltCoordinatesAndDraw(filePath):
     contents = file.read()
 
     plt.figure(num = 1, figsize = (15, 15), dpi = 100)
+    ax = plt.gca()
+    #x轴方向调整：
+    ax.xaxis.set_ticks_position('top') #将x轴的位置设置在顶部
+    ax.invert_xaxis() #x轴反向
+
+    #y轴方向调整：
+    ax.yaxis.set_ticks_position('right') #将y轴的位置设置在右边
+    ax.invert_yaxis() #y轴反向
 
     # 设置刻度标记的大小
     #plt.tick_params(axis='both', which='major', labelsize = 14)
 
     # 设置每个坐标轴的取值范围
     #plt.axis([0, 8000, 0, 6000]) 
-    
-    # 设置图表标题并给坐标轴加上标签
-    plt.title(fileName, fontsize = 18)
 
     #print(contents)
     for coordinate in contents.split():
@@ -115,6 +125,18 @@ def CaculateCurrentPltCoordinatesAndDraw(filePath):
 
     xLableTitle = "宽：" + str(width) + " mm"
     yLableTitle = "高：" + str(height) + " mm"
+
+    if ((width <= 78.99) and (height <= 167.99)):
+        fileName += ' (S码)'
+    elif ((width <= 97.99) and (height <= 183.99)):
+        fileName += ' (M码)'
+    elif ((width <= 200.99) and (height <= 280.99)):
+        fileName += ' (L码)'
+    elif ((width <= 400.99) and (height <= 265.99)):
+        fileName += ' (XL码)'
+
+    # 设置图表标题并给坐标轴加上标签
+    plt.title(fileName, fontsize = 18)
 
     plt.xlabel(xLableTitle, font)
     plt.ylabel(yLableTitle, font)
@@ -214,10 +236,23 @@ def DownloadPltfile(pltUrl):
     plt_url = pltUrl
     fileName = os.path.basename(plt_url)
     r = requests.get(plt_url) 
-    with open("D://DownloadPlt//" + fileName,'wb') as f:
+    
+    pltSavePathDir = ''
+    if(SYSSTRING == "Windows"):
+        print ("Call Windows tasks")
+        pltFileRootPath = '纵向\\'
+        pltSavedJPGPath = '纵向JPG\\'
+    elif(SYSSTRING == "Linux"):
+        print ("Call Linux tasks")
+    elif(SYSSTRING == "Darwin"):
+        print ("Call Darwin tasks")
+        pltSavePathDir = '/Users/zhoujunliang/Downloads/PltCheckDir/'
+    else:
+          print ("Other System tasks")
+    with open(pltSavePathDir + fileName,'wb') as f:
         f.write(r.content)
         print("Download Plt file completed!!!")
-        return "D://DownloadPlt//" + fileName
+        return pltSavePathDir + fileName
 
 
 if __name__ == "__main__":
@@ -238,9 +273,11 @@ if __name__ == "__main__":
 
     #显示单个Plt文件
     sysInit()
-    fileUrl = sys.argv[1]
-    print(fileUrl)
-    filePath = DownloadPltfile(fileUrl)
+    #fileUrl = 'https://static.vr186.com/public/upload/material/plt/mobilephonefilm/apple/iphone12max/screenprotector/苹果12max前膜2020.9.15.plt'
+    # print(fileUrl)
+    #filePath = DownloadPltfile(fileUrl)
+    filePath = '/Users/zhoujunliang/Downloads/pltnewConvent/mobilephonefilm/honor/play7/(myanmar)(halfcover)/backfilm/荣耀changwan7半包20200829.plt'
+    print(filePath)
     tempPath = os.path.basename(filePath)
     fileName = os.path.splitext(tempPath)[0]
     CaculateCurrentPltCoordinatesAndDraw(filePath)
