@@ -3,7 +3,10 @@ import os
 import platform
 import sys
 import requests
+#添加matplotlib.use('TkAgg')不然Mac无法show图片
+import matplotlib; matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
+from matplotlib.backends.backend_pdf import PdfPages
 print(sys.getdefaultencoding())
 
 
@@ -149,7 +152,12 @@ def CaculateCurrentPltCoordinatesAndDraw(filePath):
     # toggle fullscreen mode
     #plt.get_current_fig_manager().full_screen_toggle() 
     plt.show() 
+    #保存图象
+    #plt.savefig('test11111.pdf')
+    plt.close()
+
     print("Show Completed！！！")
+    
 
     return
    
@@ -221,10 +229,10 @@ def DrawPlt(coordsX, coordsY, filename):
     
     #plt.plot(coordsY, cooXrdsX, color = "r", linestyle = "--", marker = "*", linewidth = 2.0, label = filename)
     plt.plot(coordsX, coordsY, color = "r", label = filename)
-     # 设置 图例所在的位置 使用推荐位置
-    plt.legend(loc = 'best') 
+    # 设置 图例所在的位置 使用推荐位置
+    #plt.legend(loc = 'best') 
 
-    plt.axis("equal")
+    #plt.axis("equal")
     # toggle fullscreen mode
     #plt.get_current_fig_manager().full_screen_toggle() 
     plt.show() 
@@ -273,12 +281,12 @@ if __name__ == "__main__":
 
     #显示单个Plt文件
     sysInit()
-    #fileUrl = 'https://static.vr186.com/public/upload/material/plt/mobilephonefilm/apple/iphone12max/screenprotector/苹果12max前膜2020.9.15.plt'
+    #fileUrl = 'https://static.vr186.com/public/upload/material/plt/mobilephonefilm/xiaomi/cc9/(myanmar)/backfilm/小米cc9全包20200914.plt'
     # print(fileUrl)
     #filePath = DownloadPltfile(fileUrl)
-    filePath = '/Users/zhoujunliang/Downloads/pltnewConvent/mobilephonefilm/honor/play7/(myanmar)(halfcover)/backfilm/荣耀changwan7半包20200829.plt'
-    print(filePath)
+    filePath = '/Users/zhoujunliang/Desktop/L码(270X190)横向厂测数KKKK22222222K据.plt'
+    #print(filePath)
     tempPath = os.path.basename(filePath)
-    fileName = os.path.splitext(tempPath)[0]
+    fileName = os.path.splitext(tempPath)[0]    
     CaculateCurrentPltCoordinatesAndDraw(filePath)
     #DrawPlt(coordinateX, coordinateY, fileName)
