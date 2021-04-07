@@ -281,11 +281,10 @@ if __name__ == "__main__":
 
     #显示单个Plt文件
     sysInit()
-    #fileUrl = 'https://static.vr186.com/public/upload/material/plt/mobilephonefilm/xiaomi/cc9/(myanmar)/backfilm/小米cc9全包20200914.plt'
-    # print(fileUrl)
-    #filePath = DownloadPltfile(fileUrl)
-    filePath = '/Users/zhoujunliang/Desktop/L码(270X190)横向厂测数KKKK22222222K据.plt'
-    #print(filePath)
+    #'https://static.vr186.com/public/upload/material/plt/mobilephonefilm/xiaomi/redminote9s/(withcover)/screenprotector/红米note9s前膜带壳3.25.plt'
+    fileUrl = sys.argv[1]
+    print(fileUrl)
+    filePath = DownloadPltfile(fileUrl)
     tempPath = os.path.basename(filePath)
     fileName = os.path.splitext(tempPath)[0]    
     CaculateCurrentPltCoordinatesAndDraw(filePath)
