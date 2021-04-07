@@ -281,7 +281,6 @@ if __name__ == "__main__":
 
     #显示单个Plt文件
     sysInit()
-    #'https://static.vr186.com/public/upload/material/plt/mobilephonefilm/xiaomi/redminote9s/(withcover)/screenprotector/红米note9s前膜带壳3.25.plt'
     fileUrl = sys.argv[1]
     print(fileUrl)
     filePath = DownloadPltfile(fileUrl)
