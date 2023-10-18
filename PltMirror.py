@@ -149,7 +149,7 @@ def DrawPlt2(filePath):
     for miPt in allMirrorPt:
         print(miPt)
 
-def get_points(path) :
+def get_points(filePath) :
     #Mac格式
     file = open(filePath, encoding='utf-8')
     print("文件路径为： " + file.name)
@@ -308,9 +308,28 @@ def DrawPoints(coordinates, clockwise):
     plt.close()
 
 if __name__ == "__main__":
-    filePath = '/Users/zhoujunliang/Downloads/aaa.plt'
+    # filePath = '/Users/zhoujunliang/Downloads/aaa.plt'
     # DrawPlt2(filePath)
-    get_points(filePath)
-    print("all mirrored pt is ")
-    for pt in allMirroredCoordinates :
-        print(pt)
+    # 获取入口参数个数
+    num_arguments = len(sys.argv)
+    print("传参个数为 %d" % (num_arguments))
+    if num_arguments != 3:
+        print("******参数错误******\n参数一:源Plt文件路径\n参数二:镜像逆时针Plt文件路径")
+    else:
+        sourceFilePath = sys.argv[1]
+        mirroredFilePath = sys.argv[2]
+        get_points(sourceFilePath)
+        # print("all mirrored pt is ")
+        # 使用 "with" 语句来自动管理文件的打开和关闭
+        with open(mirroredFilePath, "w") as file:
+            file.write("IN IN ")
+            for pt in allMirroredCoordinates :
+                print(pt)
+                file.write(pt)
+            file.write("U0,0 @ ")
+        print("SUCESS\n镜像逆时针Plt文件已创建并写入完成!")
+        
+        
+    
+
+   
