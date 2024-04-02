@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
-import platform
 import sys
-import requests
 #添加matplotlib.use('TkAgg')不然Mac无法show图片
 import matplotlib; matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
@@ -22,10 +20,10 @@ def DrawPlt2(filePath):
     ax = plt.gca()
     #x轴方向调整：
     ax.xaxis.set_ticks_position('top') #将x轴的位置设置在顶部
-    ax.invert_xaxis() #x轴反向
+    # ax.invert_xaxis() #x轴反向
     
     #y轴方向调整：
-    ax.yaxis.set_ticks_position('right') #将y轴的位置设置在右边
+    # ax.yaxis.set_ticks_position('left') #将y轴的位置设置在右边
     ax.invert_yaxis() #y轴反向
 
     #Mac格式
@@ -55,15 +53,18 @@ def DrawPlt2(filePath):
         else:
             continue
 
+        #有两个点才能进行绘制
         if len(pointX) > 1 :       
+            #绘制提刀运动轨迹
             if bDown:
-                plt.plot(pointX, pointY, color = "r")
-                del pointX[0]
-                del pointY[0]
+                plt.plot(pointY, pointX, color = "r", linewidth = 1)
+            #绘制切割运动轨迹
             else:
-                plt.plot(pointX, pointY, linestyle = 'dotted', color = "b")
-                del pointX[0]
-                del pointY[0]
+                plt.plot(pointY, pointX, linestyle = 'dotted', color = "b", linewidth = 1)
+
+            #删除前一个点
+            del pointX[0]
+            del pointY[0]
         else:
             continue
        
@@ -86,6 +87,63 @@ def DrawPlt2(filePath):
     #plt.savefig('test11111.pdf')
     plt.close()
 
+def relative_to_absolute_path(path):
+    # 将SVG路径中的相对坐标转换为绝对坐标
+    commands = ['M', 'L', 'H', 'V', 'C', 'S', 'Q', 'T', 'A']
+    values_per_command = {'M': 2, 'L': 2, 'H': 1, 'V': 1, 'C': 6, 'S': 4, 'Q': 4, 'T': 2, 'A': 7}
+    current_pos = [0, 0]
+    abs_path = []
+    for i, token in enumerate(path):
+        if token in commands:
+            # 处理路径命令
+            values = path[i+1:i+1+values_per_command[token]]
+            if token == 'M':
+                # M命令的第一个点为绝对坐标
+                current_pos = values[:2]
+                abs_path.append(['M'] + current_pos)
+                values = values[2:]
+                token = 'L'
+            elif token == 'm':
+                # m命令的第一个点为相对坐标
+                current_pos[0] += values[0]
+                current_pos[1] += values[1]
+                abs_path.append(['M'] + current_pos)
+                values = values[2:]
+                token = 'l'
+            for j in range(0, len(values), 2):
+                # 将相对坐标转换为绝对坐标
+                if token in ('l', 't'):
+                    values[j] += current_pos[0]
+                    values[j+1] += current_pos[1]
+                elif token in ('h',):
+                    values[j] += current_pos[0]
+                elif token in ('v',):
+                    values[j] += current_pos[1]
+                elif token in ('c',):
+                    values[j] += current_pos[0]
+                    values[j+1] += current_pos[1]
+                    values[j+2] += current_pos[0]
+                    values[j+3] += current_pos[1]
+                    values[j+4] += current_pos[0]
+                    values[j+5] += current_pos[1]
+                elif token in ('s', 'q'):
+                    values[j] += current_pos[0]
+                    values[j+1] += current_pos[1]
+                    values[j+2] += current_pos[0]
+                    values[j+3] += current_pos[1]
+                elif token in ('a',):
+                    values[j+5] += current_pos[0]
+                    values[j+6] += current_pos[1]
+                current_pos = values[j:j+2]
+            abs_path.append([token] + values)
+    return abs_path
+
+
 if __name__ == "__main__":
     filePath = '/Users/zhoujunliang/Downloads/aaa.plt'
     DrawPlt2(filePath)
+    # path = 'M 8.98 8.8 L 74.98 8.8 L 74.98 75.8 L 8.98 75.8 z'
+    # abspath = relative_to_absolute_path(path)
+    # print(len(abspath))
+    # for i in abspath:
+    #     print("pt is ", i)
