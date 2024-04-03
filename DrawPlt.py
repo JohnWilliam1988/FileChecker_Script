@@ -80,12 +80,12 @@ def CaculateCurrentPltCoordinatesAndDraw(filePath):
     plt.figure(num = 1, figsize = (15, 15), dpi = 100)
     ax = plt.gca()
     #x轴方向调整：
-    ax.xaxis.set_ticks_position('top') #将x轴的位置设置在顶部
+    ax.xaxis.set_ticks_position('bottom') #将x轴的位置设置在顶部
     ax.invert_xaxis() #x轴反向
-
+    
     #y轴方向调整：
     ax.yaxis.set_ticks_position('right') #将y轴的位置设置在右边
-    ax.invert_yaxis() #y轴反向
+    # ax.invert_yaxis() #y轴反向
 
     # 设置刻度标记的大小
     #plt.tick_params(axis='both', which='major', labelsize = 14)
@@ -98,7 +98,8 @@ def CaculateCurrentPltCoordinatesAndDraw(filePath):
         #print(coordinate)
         if (coordinate[0] == 'U'):
             if ((len(coordsX) > 0) and (len(coordsY) > 0 )):
-                plt.plot(coordsX, coordsY, color = "r")
+                print(coordsX)
+                plt.plot(coordsY, coordsX, color = "r")
 
             coordsX.clear()
             coordsY.clear()
@@ -125,10 +126,7 @@ def CaculateCurrentPltCoordinatesAndDraw(filePath):
         'weight': 'normal',
         'size': 16,
         }
-
-    xLableTitle = "宽：" + str(width) + " mm"
-    yLableTitle = "高：" + str(height) + " mm"
-
+    
     if ((width <= 78.99) and (height <= 167.99)):
         fileName += ' (S码)'
     elif ((width <= 97.99) and (height <= 183.99)):
@@ -140,11 +138,9 @@ def CaculateCurrentPltCoordinatesAndDraw(filePath):
 
     # 设置图表标题并给坐标轴加上标签
     plt.title(fileName, fontsize = 18)
+    plt.xlabel(str(height) + " mm", font)
+    plt.ylabel(str(width) + " mm", font)
 
-    plt.xlabel(xLableTitle, font)
-    plt.ylabel(yLableTitle, font)
-
-    
      # 设置 图例所在的位置 使用推荐位置
     plt.legend(loc = 'best') 
 
@@ -281,10 +277,11 @@ if __name__ == "__main__":
 
     #显示单个Plt文件
     sysInit()
-    fileUrl = sys.argv[1]
-    print(fileUrl)
-    filePath = DownloadPltfile(fileUrl)
-    tempPath = os.path.basename(filePath)
-    fileName = os.path.splitext(tempPath)[0]    
+    # fileUrl = sys.argv[1]
+    # print(fileUrl)
+    # filePath = DownloadPltfile(fileUrl)
+    # tempPath = os.path.basename(filePath)厂测数据-慢-横向_pDDDDDDDDD
+    # fileName = os.path.splitext(tempPath)[0]    
+    filePath = '/Users/zhoujunliang/Downloads/aaa.plt'
     CaculateCurrentPltCoordinatesAndDraw(filePath)
     #DrawPlt(coordinateX, coordinateY, fileName)
