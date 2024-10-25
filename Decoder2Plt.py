@@ -15,7 +15,7 @@ def writefile(filepath, contents):
             file.write(content + " ")
         file.close()
         print("Plt转换完成")
-        DrawPltVer2.DrawPlt2(decoderfilepath)
+        DrawPltVer2.Draw(decoderfilepath)
 
 def decoder(password, contents):
     P = []
@@ -90,8 +90,6 @@ def replace_greater_than_second_duplicate_with_x(wsjp_number):
 
     return replacedX
     
-
-
 #截取原始密码
 def getpassword(content):
     # 编写正则表达式
@@ -124,7 +122,7 @@ def parserfile(source):
     
 
 if __name__ == "__main__":
-    filePath = "/Users/zhoujunliang/Downloads/Data/待破解文件/211201165905-32892.sjc"
+    filePath = "/Users/zhoujunliang/Desktop/200714185004-136.sjc"
     contents = parserfile(filePath)
     psd = getpassword(contents)
     if psd != 0:
